@@ -1,12 +1,8 @@
 <?php
-
-
     
     $getalOne = isset($_GET['getalOne'])  ? $_GET['getalOne'] : ''; ;
     $getalTwo = isset($_GET['getalTwo'])  ? $_GET['getalTwo'] : '';;
-
     $bewerking = isset($_GET['bewerking']) ? (string) $_GET['bewerking'] : '' ;
-    
     
     //$moduleAction = isset($_GET['moduleAction']);
     $result = 0;
@@ -20,12 +16,9 @@
         } else if($bewerking === '*'){
             $result = $getalOne * $getalTwo;
         }
-
-        // set cookie
-        setcookie($numberOne, $getalOne);
-        setcookie($numbetTwo, $getalTwo);
-        setcookie($bewerk, $bewerking);
     }
+
+       
 
 
 ?><!DOCTYPE html>

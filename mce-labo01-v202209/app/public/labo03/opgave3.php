@@ -1,67 +1,129 @@
 <?php
-
-$name = isset($_GET['name']) ? (string) $_GET['name'] : '' ;
-$bedrijf = isset($_GET['bedrijf']) ? (string) $_GET['bedrijf'] : '' ;
-	
-?><!DOCTYPE html>
-<html>
-<head>
-	<title>Testform</title>
-	<meta charset="UTF-8" />
-	<link rel="stylesheet" type="text/css" href="styles.css" />
-</head>
-
-<body>
-    <h2>PHP Form Validation Example</h2>
-    <p><span class="error">* required field</span></p>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
-        Name: 
-        <input type="text" name="name" value = "<?php echo htmlentities($name); ?>">
-        <span class="error"></span>
-        <br><br>
-        Bedrijf: <input type="text" name="bedrijf" value = "<?php echo htmlentities($bedrijf); ?>">
-        <span class="error"></span>
-        <br><br>
-        Land:
-        <select name="land" id="land" value = "<?php echo htmlentities($land); ?> ">
-            <option value="belgie">Belgie</option>
-            <option value="londen">Londen</option>
-            <option value="spanje">Spanje</option>
-            <option value="portugal">Portugal</option>
-        </select>
-        <br><br>
-        
-        <input type = "hidden" name= "moduleAction" value="processName " />
-        <input type = "submit" id = "btnSubmit" name="btnSubmit" value="Send" />
     
-        
-<?php
+    $getalOne = isset($_GET['getalOne'])  ? $_GET['getalOne'] : ''; ;
+    $getalTwo = isset($_GET['getalTwo'])  ? $_GET['getalTwo'] : '';;
+    $bewerking = isset($_GET['bewerking']) ? (string) $_GET['bewerking'] : '' ;
 
-/**
- * Helper Functions
- * ========================
- */
+    $getalOneCookie = isset($_COOKIE['numberOne'])  ? $_COOKIE['numberOne'] : ''; ;
+    $getalTwoCookie = isset($_COOKIE['numberTwo'])  ? $_COOKIE['numberTwo'] : '';;
+    $resultCookie = isset($_COOKIE['result'])  ? $_COOKIE['result'] : '';;
+    $bewerkingCookie = isset($_COOKIE['bewerk']) ? (string) $_COOKIE['bewerk'] : '' ;
 
-    /**
-     * Dumps a variable
-     * @param mixed $var
-     * @return void
-     */
-    function dump($var) {
-        echo '<pre>';
-        var_dump($var);
-        echo '</pre>';
+    
+    if($getalOne === '' || $getalTwo === '' || $bewerking === ''){
+        $getalOne = $getalOneCookie;
+        $getalTwo = $getalTwoCookie;
+        $bewerkingCookie = $bewerkingCookie;
+        $result = $resultCookie;
+    }
+    $result = 0;
+    if(is_numeric($getalOne) && is_numeric($getalTwo) )  {
+        if ($bewerking === '+'){
+            $result = $getalOne + $getalTwo;
+        } else if($bewerking === '/'){
+            $result = $getalOne / $getalTwo;
+        } else if($bewerking === '-'){
+            $result = $getalOne - $getalTwo;
+        } else if($bewerking === '*'){
+            $result = $getalOne * $getalTwo;
+        }
+
+       
+        // set cookie
+        setcookie('numberOne', $getalOne);
+        setcookie('numberTwo', $getalTwo);
+        setcookie('bewerk', $bewerking);
+        setcookie('result', $result);
     }
 
 
-/**
- * Main Program Code
- * ========================
- */
+?><!DOCTYPE html>
+<html>
+    <head>
+        <title>Testform</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="styles.css" />
+    </head>
 
-    // dump $_POST
-    dump($_GET);
+    <body>
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
+            <fieldset>
+                <h2> Oefening 2</h2>
+                <dl class="clearfix">
+                    <dt>
+                        <label for="getalOne">Getal 1</label>
+                    </dt>
+                    <dd class="text">
+                        <input type ="text" id = "getalOne" name = "getalOne" value = "<?php echo htmlentities($getalOne); ?>"  />   
+                        <span class="message error"></span>
+                    </dd>
+
+                    <dt>
+                        <label for="getalTwo">Getal 2</label>
+                    </dt>
+                    <dd class="text">
+                        <input type ="text" id = "getalTwo" name = "getalTwo"  value = "<?php echo htmlentities($getalTwo); ?> "/>   
+                        <span class="message error"></span>
+                    </dd>
+                    
+                    <dt>
+                        <label for="bewerking">Kies een bewerking: </label>
+                    </dt>
+
+                    <dd>
+                        <select name="bewerking" id="bewerking" value = "<?php echo htmlentities($bewerking); ?> ">
+                            <option value="*">*</option>
+                            <option value="+">+</option>
+                            <option value="-">-</option>
+                            <option value="/">/</option>
+                        </select>
+                    </dd>
+
+                    <dt>
+                        <label for="result">Resultaat</label>
+                    </dt>
+
+                    <dd>
+                        <input type="text" id="result" name="result" disabled value = "<?php echo htmlentities($result); ?>"><br><br>
+                    </dd>
+
+                    <dt class="full clearfix" id = "lastrow">
+                        <input type = "hidden" name= "moduleAction" value="processName " />
+                        <input type = "submit" id = "btnSubmit" name="btnSubmit" value="Send" />
+                    </dt>
+
+                </dl>
+            </fieldset>
+        </form>
+
+<?php
+
+    /**
+     * Helper Functions
+     * ========================
+     */
+
+        /**
+         * Dumps a variable
+         * @param mixed $var
+         * @return void
+         */
+        function dump($var) {
+            echo '<pre>';
+            var_dump($var);
+            echo '</pre>';
+        }
+
+
+    /**
+     * Main Program Code
+     * ========================
+     */
+
+        // dump $_POST
+        dump($_GET);
 
 ?>
-    </form>
-</body>
+    </body>
+</html>   
+
