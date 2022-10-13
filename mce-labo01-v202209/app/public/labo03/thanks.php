@@ -1,6 +1,6 @@
 <?php
     session_start();
-    $name = isset($_SESSION['name']) ? (string) $_SESSION['name'] : '';
+    $name = $_SESSION['naam'];
 
     ?><!doctype html>
     <html>
@@ -13,5 +13,6 @@
 
     <body>
         <h1>Bedankt</h1>
-        <p> Bedankt voor jouw registratie , <?php echo $name; ?></p>  
+        <p> Bedankt voor jouw registratie , <?php echo $name ?></p>    
+        <?php print_r($_SESSION['array']); ?>
     </body>

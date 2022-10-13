@@ -2,25 +2,48 @@
 
 session_start();
 
-$name = isset($_SESSION['name']) ? (string) $_SESSION['name'] : '' ;
-$food = isset($_SESSION['food']) ? (string) $_SESSION['food'] : '' ;
+$name = isset($_GET['name']) ? (string) $_GET['name'] : '' ;
+$food = isset($_GET['food']) ? (string) $_GET['food'] : '' ;
 $bedrijf = isset($_GET['bedrijf']) ? (string) $_GET['bedrijf'] : '' ;
 $land = isset($_GET['land']) ? (int) $_GET['land'] : 0 ;
+$taal = isset($_GET['fav_language']) ? (string) $_GET['fav_language'] : '';
 $errors = [];
+
 $moduleAction = isset($_GET['moduleAction']) ? (string) $_GET['moduleAction'] : '';
+
+$values = array(
+    "Bedrijf" => $bedrijf,
+    "Land" => $land,
+    "Favorite_prograaming_language" => $taal, 
+);
+
 
 
 if($moduleAction == 'registerEvent'){
-   // if(strlen(trim($name)) < 3 || trim($name) === ''){
-     //   $errors[] = "Gelieve jouw naam in te vullen";
-    //}
+   if(strlen(trim($name)) < 3 || trim($name) === '' ){
+       $errors[] = "Gelieve jouw naam in te vullen";
+    }
+
+    if(strlen(trim($food)) < 3 || trim($food) === '' ){
+        $errors[] = "Gelieve een Food restrictions in te vullen";
+     }
     
     if($land < 1 || $land > 6){
         $errors[] = "Gelieve en land selecteren";
     }
     
-    echo count($errors);
+    
+    
     if(count($errors) === 0){
+
+        echo $naam;
+        $_SESSION['naam'] = $name;
+        $_SESSION['array'] = array(
+            "Bedrijf" => $bedrijf,
+            "Land" => $land,
+            "Favorite_prograaming_language" => $taal, 
+            "Food restrictions" => $food,
+        );
         header('Location: thanks.php');
         exit();
     }
