@@ -1,18 +1,31 @@
 <?php
 
-    if (isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'login')) {
+    session_start();
 
-    // extract sent in username & password
+    if (isset($_SESSION['user'])) {
+		header('location: index.php');
+		exit();
+	}
+    //wachtwoord Azerty123(voor docent om te testen)
+    $encrypted = '$2y$10$YrY3/m/ry/hGAhVEcfWPrOgQgv.nO/nxSXJLP4vQP..stPK/2uSzC';
     $username = isset($_POST['username']) ? trim($_POST['username']) : '';
     $password = isset($_POST['password']) ? trim($_POST['password']) : '';
     $formErrors = [];
+    if (isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'login')) {
+
 
     if(strlen(trim($username)) === 0){
         $formErrors[] = "Gelieve een username in te vullen";
     }
 
     if(strlen(trim($password)) === 0){
-        $formErrors[] = "Gelieve een username in te vullen";
+        $formErrors[] = "Gelieve een wachtwoord in te vullen";
+    }
+
+    if (password_verify($password, $encrypted)){
+        $_SESSION['user'] = $username;
+        header('location: index.php');
+		exit();
     }
 
     } 
@@ -75,7 +88,7 @@
                         <label for="username" class="col-sm-3 control-label">Gebruikernaam</label>
 
                         <div class="col-sm-9">
-                            <input type="text" name="username" id="username" class="form-control" value="">
+                            <input type="text" name="username" id="username" class="form-control" value="<?php echo htmlentities($username); ?>">
                         </div>
                     </div>
                     <div class="form-group">

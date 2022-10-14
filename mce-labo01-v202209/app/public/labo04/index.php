@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+
+if (!isset($_SESSION['user'])) {
+	header('location: login.php');
+	exit();
+}
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : false;
 
 /**
  * Includes
@@ -184,7 +192,13 @@ $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="panel-body">
 
-
+            <ul>
+                <?php if ($user) { ?>
+                    <li>You are logged in. Welcome, <?php echo htmlentities($user); ?> (<a href="logout.php">log out</a>)</li>
+                <?php } else { ?>
+                    <li>You are not logged in. Please <a href="login.php" title="log in">log in</a></li>
+                <?php } ?>
+            </ul>
                 <table class="table table-striped task-table" >
                     <thead>
                     <tr>
