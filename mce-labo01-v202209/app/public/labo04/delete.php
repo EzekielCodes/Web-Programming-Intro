@@ -2,6 +2,34 @@
 
 // @TODO
 
+/**
+ * Includes
+ * ----------------------------------------------------------------
+ */
+
+// config & functions
+require_once 'includes/config.php';
+require_once 'includes/functions.php';
+
+/**
+ * Database Connection
+ * ----------------------------------------------------------------
+ */
+
+// @TODO
+$db = getDatabase();
+
+
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0; // The passed id of the task
+if (isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'delete')) {
+    $id = isset($_POST['id']) ? (int) $_POST['id'] : 0; // The passed id of the task
+
+    $stmt = $db-> prepare('DELETE FROM tasks WHERE id=?');
+    $stmt->execute([$id]);
+    header('Location: index.php');
+
+}
+
 
 ?><!DOCTYPE html>
 <html lang="nl">
@@ -51,7 +79,7 @@
 <?php
 // @TODO include the id from the GET query string into the hidden field below
 ?>
-                    <input type="hidden" name="id" value="" />
+                    <input type="hidden" name="id" value="<?php echo $id; ?>" />
 
                     <!-- Add Task Button -->
                     <div class="form-group">

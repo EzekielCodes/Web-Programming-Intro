@@ -22,7 +22,7 @@
  */
 
 	//Database Server Host
-	define ('DB_HOST', 'localhost');
+	define ('DB_HOST', 'mysqldb');
 
 	// Database Server Username
 	define ('DB_USER', 'root');

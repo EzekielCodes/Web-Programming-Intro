@@ -2,14 +2,14 @@
 
 session_start();
 
-$name = isset($_GET['name']) ? (string) $_GET['name'] : '' ;
-$food = isset($_GET['food']) ? (string) $_GET['food'] : '' ;
-$bedrijf = isset($_GET['bedrijf']) ? (string) $_GET['bedrijf'] : '' ;
-$land = isset($_GET['land']) ? (int) $_GET['land'] : 0 ;
-$taal = isset($_GET['fav_language']) ? (string) $_GET['fav_language'] : '';
+$name = isset($_POST['name']) ? (string) $_POST['name'] : '' ;
+$food = isset($_POST['food']) ? (string) $_POST['food'] : '' ;
+$bedrijf = isset($_POST['bedrijf']) ? (string) $_POST['bedrijf'] : '' ;
+$land = isset($_POST['land']) ? (int) $_POST['land'] : 0 ;
+$taal = isset($_POST['fav_language']) ? (string) $_POST['fav_language'] : '';
 $errors = [];
 
-$moduleAction = isset($_GET['moduleAction']) ? (string) $_GET['moduleAction'] : '';
+$moduleAction = isset($_POST['moduleAction']) ? (string) $_POST['moduleAction'] : '';
 
 $values = array(
     "Bedrijf" => $bedrijf,
@@ -62,7 +62,7 @@ if($moduleAction == 'registerEvent'){
 <body>
     <h2>Schrijf je in voor onze conference</h2>
     <p><span class="error">* required field</span></p>
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">  
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">  
         Name: 
         <input type="text" name="name" value = "<?php echo htmlentities($name); ?>">
         <span class="error"></span>

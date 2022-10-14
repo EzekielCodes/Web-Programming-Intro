@@ -1,5 +1,24 @@
+<?php
 
-<!DOCTYPE html>
+    if (isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'login')) {
+
+    // extract sent in username & password
+    $username = isset($_POST['username']) ? trim($_POST['username']) : '';
+    $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+    $formErrors = [];
+
+    if(strlen(trim($username)) === 0){
+        $formErrors[] = "Gelieve een username in te vullen";
+    }
+
+    if(strlen(trim($password)) === 0){
+        $formErrors[] = "Gelieve een username in te vullen";
+    }
+
+    } 
+
+
+?><!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="utf-8">

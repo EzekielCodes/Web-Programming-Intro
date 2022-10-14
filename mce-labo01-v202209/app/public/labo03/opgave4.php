@@ -1,17 +1,27 @@
 <?php
 
-$name = isset($_GET['name']) ? (string) $_GET['name'] : '' ;
-$bedrijf = isset($_GET['bedrijf']) ? (string) $_GET['bedrijf'] : '' ;
-$land = isset($_GET['land']) ? (int) $_GET['land'] : 0 ;
-
+$name = isset($_POST['name']) ? (string) $_POST['name'] : '' ;
+$bedrijf = isset($_POST['bedrijf']) ? (string) $_POST['bedrijf'] : '' ;
+$land = isset($_POST['land']) ? (int) $_POST['land'] : 0 ;
+$moduleAction = isset($_POST['moduleAction']) ? (string) $_POST['moduleAction'] : '';
 $errors = [];
-if(strlen(trim($name)) < 3 || trim($name) === ''){
-    $errors[] = "Gelieve jouw naam in te vullen";
+
+if($moduleAction == 'processName'){ 
+
+    if(strlen(trim($name)) < 3 || trim($name) === ''){
+        $errors[] = "Gelieve jouw naam in te vullen";
+    }
+    
+    if($land < 1 || $land > 6){
+        $errors[] = "Gelieve en land selecteren";
+    }
+
+    if(count($errors) === 0){
+       
+    }
 }
 
-if($land < 1 || $land > 6){
-    $errors[] = "Gelieve en land selecteren";
-}
+
 
 	
 ?><!DOCTYPE html>
@@ -23,9 +33,9 @@ if($land < 1 || $land > 6){
 </head>
 
 <body>
-    <h2>Schrijf je in voor onze conferene</h2>
+    <h2>Schrijf je in voor onze conference</h2>
     <p><span class="error">* required field</span></p>
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">  
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">  
         Name: 
         <input type="text" name="name" value = "<?php echo htmlentities($name); ?>">
         <span class="error"></span>
@@ -43,7 +53,7 @@ if($land < 1 || $land > 6){
         </select>
         <br><br>
         
-        <input type = "hidden" name= "moduleAction" value="processName " />
+        <input type = "hidden" name= "moduleAction" value="processName" />
         <input type = "submit" id = "btnSubmit" name="btnSubmit" value="Send" />
     
         

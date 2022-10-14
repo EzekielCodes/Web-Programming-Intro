@@ -16,6 +16,7 @@ require_once 'includes/functions.php';
  */
 
 // @TODO
+$db = getDatabase();
 
 
 /**
@@ -39,9 +40,30 @@ $priority = isset($_POST['priority']) ? $_POST['priority'] : 'low'; // The prior
 
 if (isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'edit')) {
 
+    $id = isset($_POST['id']) ? (int) $_POST['id'] : 0; // The passed id of the task
+
     // check if item exists (use the id from the $_POST array!)
 
     // @TODO (if error, redirect to index.php)
+
+    if(strlen(trim($what)) === 0){
+        $formErrors[] = "Gelieve een taak in te vullen";
+    }
+
+    if(! in_array($priority, $priorities)){
+        $formErrors[] = "ongeldige prioritiet";
+    }
+
+    if(count($formErrors) > 0){
+        header('Location: index.php');
+    }
+
+    if(count($formErrors) === 0 ){
+        $stmt = $db-> prepare('UPDATE  tasks SET name=?, priority= ? WHERE id=?');
+        $stmt->execute([$what,$priority,$id]);
+        exit;
+
+    }
 
     // check parameters
 
@@ -122,6 +144,10 @@ if (isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'edit')) {
                         <label for="priority" class="col-sm-3 control-label">Prioriteit</label>
                         <div class="col-sm-9">
                             <select name="priority" id="priority" class="form-control">
+                            <?php  foreach($priorities as $prio) {
+                                echo '<option value="' . $prio . '"' . ($prio == $priority? 'selected= "selected"': '') . '>' . $prio . '</option>';
+
+                            } ?>
 <?php
 // @TODO loop priorities and show them as options in the select. Be sure to persist the value
 ?>
@@ -129,10 +155,11 @@ if (isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'edit')) {
                         </div>
                     </div>
                     <input type="hidden" name="moduleAction" value="edit" />
+                    
 <?php
 // @TODO include the id from the GET query string into the hidden field below
 ?>
-                    <input type="hidden" name="id" value="" />
+                    <input type="hidden" name="id" value="<?php echo $id; ?>" />
 
                     <!-- Add Task Button -->
                     <div class="form-group">

@@ -16,6 +16,8 @@ require_once 'includes/functions.php';
  */
 
 // @TODO
+    $db = getDatabase();
+    
 
 
 /**
@@ -38,6 +40,22 @@ $priority = isset($_POST['priority']) ? $_POST['priority'] : 'low'; // The prior
 if (isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'add')) {
 
     // check parameters
+    if(strlen(trim($what)) === 0){
+        $formErrors[] = "Gelieve een taak in te vullen";
+    }
+
+    if(! in_array($priority, $priorities)){
+        $formErrors[] = "ongeldige prioritiet";
+    }
+
+    if(count($formErrors) === 0 ){
+        $stmt = $db-> prepare('INSERT INTO tasks (name,priority, added_on) VALUES (?,?,?)');
+        $stmt->execute([$what,$priority,(new DateTime())->format('Y-m-d H:i:s')]);
+
+        $priority = 'low';
+        $what = '';
+       //exit();
+    }
 
     // @TODO (if an error was encountered, add it to the $formErrors array)
 
@@ -57,7 +75,12 @@ if (isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'add')) {
  * ----------------------------------------------------------------
  */
 
+ 
+
 // @TODO get all task items from the databases
+
+$stmt = $db->query('SELECT * FROM tasks ORDER BY priority,name');
+$tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?><!DOCTYPE html>
 <html lang="nl">
@@ -90,21 +113,27 @@ if (isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'add')) {
                 Nieuwe taak
             </div>
             <div class="panel-body">
-<?php
-// @TODO if any errors are set, show them inside, list them in a <div> like this:
-/*
-                <!-- Display Validation Errors -->
-                <!-- Form Error List -->
-                <div class="alert alert-danger">
-                    <strong>Hier is iets misgegaan.</strong>
-                    <br><br>
-                    <ul>
-                        <li>Message 1</li>
-                        <li>Message 2</li>
-                    </ul>
-                </div>
-*/
-?>
+            <?php
+            if(count($formErrors) > 0){
+            ?>
+
+
+                            <!-- Display Validation Errors -->
+                            <!-- Form Error List -->
+                            <div class="alert alert-danger">
+                                <strong>Hier is iets misgegaan.</strong>
+                                <br><br>
+                                <ul>
+                                    <?php
+                                    foreach ($formErrors as $error){
+                                        ?>
+                                    
+                                    <li><?php echo $error ?></li>
+                                    <?php }?>
+                                </ul>
+                            </div>
+            
+            <?php }?>
                 <!-- New Task Form -->
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" class="form-horizontal">
 
@@ -113,7 +142,7 @@ if (isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'add')) {
                         <label for="what" class="col-sm-3 control-label">Taak</label>
 
                         <div class="col-sm-9">
-<?php
+<?php 
 // @TODO persist the text control
 ?>
                             <input type="text" name="what" id="what" class="form-control" value="">
@@ -123,6 +152,11 @@ if (isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'add')) {
                         <label for="priority" class="col-sm-3 control-label">Prioriteit</label>
                         <div class="col-sm-9">
                             <select name="priority" id="priority" class="form-control">
+                           <?php  foreach($priorities as $prio) {
+                                echo '<option value="' . $prio . '"' . ($prio == $priority? 'selected= "selected"': '') . '>' . $prio . '</option>';
+
+                            } ?>
+                           
 <?php
 // @TODO loop priorities and show them as options in the select. Be sure to persist the value
 ?>
@@ -161,28 +195,25 @@ if (isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'add')) {
 
                     </thead>
                     <tbody>
+                    <?php foreach ($tasks as $task){ ?>
 
-<?php
-// @TODO if any task items are found, show them inside <tr></tr> using the struct below
-/*
                         <tr>
                             <td class="table-text">
-                                <div class="item {$iPriority}">{$iName}</div>
+                                <div class="item <?php echo  $task['priority'] ?>"><?php echo  $task['name'] ?></div>
                             </td>
                             <td>
-                                <a class="btn btn-primary" href="edit.php?id={$iId}" role="button">
+                                <a class="btn btn-primary" href="edit.php?id=<?php echo  $task['id'] ?>" role="button">
                                     <i class="fa fa-btn fa-pencil"></i>Wijzigen
                                 </a>
                             </td>
                             <td>
-                                <a class="btn btn-danger" href="delete.php?id={$iId}" role="button">
+                                <a class="btn btn-danger" href="delete.php?id=<?php echo  $task['id'] ?>" role="button">
                                     <i class="fa fa-btn fa-trash"></i>Verwijderen
                                 </a>
                             </td>
                         </tr>
-*/
-// @TODO if no task items are found, show a user-friendly message
-?>
+
+                   <?php }?>
 
                     </tbody>
                 </table>
