@@ -80,13 +80,17 @@ if($moduleAction == 'registerEvent'){
         </select>
         <br><br>
         <p>Please select your Options:</p>
-        <input type="radio" id="elo" name="fav_language" value="ELO">
+        <input type="radio" id="elo" name="fav_language" value="ELO" <?php if ($taal
+		 == 'ELO') { echo ' checked="checked"'; } ?> />
         <label for="html">ELO</label><br>
-        <input type="radio" id="infra" name="fav_language" value="INFRA">
+        <input type="radio" id="infra" name="fav_language" value="INFRA" <?php if ($taal
+		 == 'INFRA') { echo ' checked="checked"'; } ?>>
         <label for="infra">INFRA</label><br>
-        <input type="radio" id="web" name="fav_language" value="WEB">
+        <input type="radio" id="web" name="fav_language" value="WEB" <?php if ($taal
+		 == 'WEB') { echo ' checked="checked"'; } ?>>
         <label for="web">WEB</label><br>
-        <input type="radio" id="prog" name="fav_language" value="PROG">
+        <input type="radio" id="prog" name="fav_language" value="PROG" <?php if ($taal
+		 == 'PROG') { echo ' checked="checked"'; } ?>>
         <label for="prog">PROG</label>
         <br><br>
 
