@@ -61,14 +61,13 @@ if (isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'edit')) {
         $formErrors[] = "ongeldige prioritiet";
     }
 
-    if(count($formErrors) > 0){
-        header('Location: index.php');
-    }
+
 
     if(count($formErrors) === 0 ){
         $stmt = $db-> prepare('UPDATE  tasks SET name=?, priority= ? WHERE id=?');
         $stmt->execute([$what,$priority,$id]);
-        exit;
+        header('Location: index.php');
+        exit();
 
     }
 
