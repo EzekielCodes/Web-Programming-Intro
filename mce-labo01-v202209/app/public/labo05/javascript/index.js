@@ -20,6 +20,7 @@
         var input = "";
         var inputTemp = "";
         var operator = "";
+        var inputKeys = "";
         const table = document.querySelector('.calculator-keys');
         table.addEventListener('click', function(e) {
         input = input + e.target.innerHTML;
@@ -74,7 +75,36 @@
         });
 
         document.querySelector('.calculator-screen').addEventListener('keypress', function(e) {
+            if (e.keyCode == 13){
+                console.log("pu");
+                var splitUp = inputKeys.match(/[^\d()]+|[\d.]+/g)
+                console.log(splitUp);
+                switch (splitUp[1]) {
+                    case '+':
+                        inputKeys =  parseInt(splitUp[0]) + parseInt(splitUp[2]);
+                        document.querySelector('.calculator-screen').value  = inputKeys;
+                      break
+                    case '-':
+                        inputKeys = parseInt(splitUp[0]) - parseInt(splitUp[2]);
+                        document.querySelector('.calculator-screen').value  = inputKeys;
+                      break
+                    case '×':
+                        inputKeys = parseInt(splitUp[0]) * parseInt(splitUp[2])
+                        document.querySelector('.calculator-screen').value  = inputKeys;
+                      break
+                    case '÷':
+                        inputKeys = parseInt(splitUp[0]) / parseInt(splitUp[2]);
+                        document.querySelector('.calculator-screen').value  =  inputKeys;
+                      break
+                    default:
+                      return
+                  }
+                  input = ""; 
+            }
+            inputKeys = inputKeys + e.key;
+            console.log(inputKeys);
             console.log('You pressed ' + (e.shiftKey ? 'Shift-' : '')  + e.key + ', code ' + e.keyCode);
+           
         });
 
         
