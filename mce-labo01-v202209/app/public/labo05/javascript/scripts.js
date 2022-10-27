@@ -84,8 +84,50 @@
 		});
 
 		document.getElementById('buttonS').addEventListener('click', function(){
-			const val = document.getElementById('layer1').style.zIndex = 1;	
+			document.getElementById('layer2').style.top = 0;	
+			document.getElementById('layer1').style.top = 0;	
+			document.getElementById('layer3').style.top = 0;	
 		});
+
+		document.getElementById('buttonT').addEventListener('click', function(){
+			document.body.style.backgroundColor = "gray";
+			
+		});
+
+		document.getElementById('buttonU').addEventListener('click', function(){
+			window.open('https://www.google.be/', '_blank');
+		});
+
+		document.getElementById('buttonV').addEventListener('click', function(){
+			document.title = "testPagina";
+		});
+
+		document.getElementById('buttonY').addEventListener('click', function(){
+			document.body.style.backgroundColor = "blue";
+			
+		});
+
+		document.getElementById('buttonZ').addEventListener('click', function(){
+			var textcol,
+			message = 'Nice color choice';
+			textcol = window.prompt('Enter a color:');
+			document.body.style.backgroundColor = textcol;		
+		});
+
+		document.getElementById('buttonAA').addEventListener('click', function(){
+			var h1Elements = document.getElementsByTagName("h2");
+
+			for(var i = 0; i < h1Elements.length; i++) {
+			h1Elements[i].style.color = "green";
+			}
+			
+		});
+
+		document.getElementById('buttonAB').addEventListener('click', function(){
+			var buttons = document.querySelectorAll('#form1 input[type=button]')
+			alert(buttons.length);			
+		});
+		
 	});
 
 	
