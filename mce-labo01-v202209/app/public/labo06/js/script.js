@@ -154,6 +154,8 @@
             document.querySelector('#addTodoModal .button-add' ).addEventListener('click', function (){
                 let naam = document.querySelector('#addTodoModal .modal-input').value;
                 let prio = document.querySelector('#addTodoModal .modal-select').value
+                document.querySelector('#addTodoModal .modal-input').value = '';
+                document.querySelector('#addTodoModal .modal-select').value = 'low';
                 addTodo(naam,prio);
                 modelAdd.style.display = 'none';
 
