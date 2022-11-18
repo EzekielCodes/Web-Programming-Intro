@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Discotheque</title>
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="disco.css"/>
+</head>
+
+<body id="home">
+<div id="navbar">
+    <div class="left">
+        <select id="jukebox">
+            <option value="">Pick a song</option>
+        </select>
+    </div>
+    <div class="right">
+        <div id="add">
+            <a href="#song-modal">Add a song</a>
+        </div>
+        <div id="pause">
+            <a href="#" class="stop">Pause</a>
+        </div>
+    </div>
+</div>
+<div id="numero5ive" class="bigNums bA2ABFF">
+    <div id="colorBLOCK"></div>
+</div>
+
+<div class="modal-container" id="song-modal">
+
+    <div class="modal">
+        <h3>Add a song</h3>
+        <p>This is the modals content.</p>
+        <form action="" method="post">
+            <input type="text" name="title" placeholder="Title"/>
+            <input type="text" name="artist" placeholder="Artist"/>
+            <input type="number" name="bpm" placeholder="150"/>
+            <select name="genre">
+                <option value="rock">Rock</option>
+                <option value="house">House</option>
+                <option value="electronic">Electronic</option>
+                <option value="alternative techno">Alternative techno</option>
+            </select>
+            <input type="submit" value="Save song"/>
+        </form>
+        <div class="modal-close">
+            <a href="#">x</a>
+        </div>
+    </div>
+
+    <a href="#" class="modal-bg"></a>
+</div>
+<script src="disco.js"></script>
+</body>
+</html>

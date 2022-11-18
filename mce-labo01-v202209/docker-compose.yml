@@ -32,3 +32,16 @@ services:
     restart: always
     depends_on:
         - mysqldb
+
+  nodejs:
+    image: node:19
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    command: bash -c "npm install express sqlite3 cors && npm start"
+    working_dir: "/usr/src/app"
+    volumes:
+      - "./app/public/labo07:/usr/src/app"
+      - "/usr/src/app/node_modules"
+    links:
+      - mysqldb

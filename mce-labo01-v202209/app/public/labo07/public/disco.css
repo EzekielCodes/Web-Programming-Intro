@@ -1,0 +1,183 @@
+body{
+	padding:0px;
+	margin:0px;
+	font-family: helvetica neue, arial, sans-serif;
+	background:rgb(7,11,42);
+}
+
+h2 {
+	font-weight: 100;	
+	font-weight: lighter;	
+	margin: 0;
+	padding: .25em 0;
+}
+
+#navbar {
+	position: static;
+	width: 100%; height: 50px;
+	padding: 11px 15px 10px;
+	background: #fff;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: space-between;
+}
+
+#navbar .right {
+	display: flex;
+}
+
+#navbar select {
+	min-width: 200px;
+	padding: 5px;
+}
+
+#navbar a {
+	display: block;
+	margin-left: 15px;
+	padding: 5px 15px;
+	background: red;
+	color: #fff; text-transform: uppercase; text-decoration: none; font-size: 16px;
+}
+#navbar #add a {
+	background: green;
+}
+
+
+	
+	#colorBLOCK {
+		width: 50vw; height: 50vh;
+		margin: 25vh 0 0 25vw;
+		overflow: hidden;
+		z-index:1; 
+		position:fixed; 
+		top:0px; 
+		left:0px; 
+		background:rgb(7,11,42);
+	}
+			
+	.bigNums div.ColNums {
+		width: auto;
+		position: fixed;
+		top: 18px;
+		right: 18px;
+		border-radius: 9px;
+		padding: 0 1em;
+		color: white;
+		overflow: hidden;
+		height: auto;
+		font-size:1.2em;
+		z-index:3;
+	}
+	
+	.bigNums div.ColNums.start {
+		background: rgba(70,70,70,.8);
+	}
+	
+	.bigNums ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;		
+	}
+	
+	.start {
+		display: none;
+	}
+
+	.bigNums div .row{
+		display:block;
+	}
+	
+	.bigNums div .colorholder{
+		display:block !important;
+		float:left;
+		margin: 5px;
+	}
+	
+	.bigNums div .colorholder .eaColor {
+		display:block;
+		width:80px;
+		height:80px;
+		border-radius: 40px 40px 40px 40px;
+	}
+
+
+
+/* Greeting Modal Container */
+#song-modal {
+	visibility: hidden;
+	opacity: 0;
+	transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+/* Greeting Modal Container - when open */
+#song-modal:target {
+	visibility: visible;
+	opacity: 1;
+}
+
+/* Greeting Modal */
+#song-modal .modal {
+	opacity: 0;
+	transform: translateY(-1rem);
+	transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+	transition-delay: .2s;
+}
+
+/* Greeting Modal - when open */
+#song-modal:target .modal {
+	transform: translateY(0);
+	opacity: 1;
+}
+
+/* Modal Container Styles */
+.modal-container {
+	position: relative;
+	top: 100px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Modal Background Styles */
+.modal-bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, .2);
+}
+
+.modal-close {
+	position: absolute;
+	right: 20px;
+	top: 33px;
+}
+.modal-close a {
+	color: #000;
+	text-decoration: none;
+}
+
+/* Modal Body Styles */
+.modal {
+	z-index: 1;
+	background-color: white;
+	width: 80%;
+	max-width: 500px;
+	padding: 1rem;
+	border-radius: 8px;
+}
+
+.modal input,
+.modal select {
+	float: left;
+	width: 98%;
+	padding: 5px;
+	margin: 2% 0;
+}
+.modal input[type="submit"] {
+	width: auto;
+}
