@@ -128,7 +128,20 @@
 	}
 
 	const addSong = function(song) {
-
+		fetch('/songs', {
+			method: 'POST', // or 'PUT'
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(song),
+			})
+			.then((response) => response.json())
+			.then((song) => {
+				console.log('Success:', song);
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+			});
 	};
 
 	const editSong = function(song) {
@@ -144,6 +157,7 @@
 
 		refreshSongs();
 		createColors();
+		
 
 		dance = setInterval(function() {
 			createColorsWithMood(mood)
@@ -178,11 +192,21 @@
 
 	// @todo
 	// Event click listener for add
+	document.getElementById('form').addEventListener('submit',function(e){
+		e.preventDefault();
+		let artist = document.querySelector('[name="artist"]').value;
+		let title = document.querySelector('[name="title"]').value;
+		let bpm = document.querySelector('[name="bpm"]').value;
+		let genre = document.querySelector('[name="genre"]').value;
 
-	document.querySelector('input[type="submit"]').addEventListener('click', function(){
-		const x = document.querySelector('input[type="submit"]');
-		console.log(x.getElementsByName('title').value);
-		console.log("vito is slim");
+		var song = {
+			title : title,
+			artist : artist,
+			bpm : bpm,
+			genre : genre
+		}
+		addSong(song);
+		refreshSongs();
 	})
 	// @todo
 	// Event click for edit
