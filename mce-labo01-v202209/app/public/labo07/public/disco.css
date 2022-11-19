@@ -171,6 +171,15 @@ h2 {
 	border-radius: 8px;
 }
 
+.modall {
+	z-index: 1;
+	background-color: white;
+	width: 80%;
+	max-width: 500px;
+	padding: 1rem;
+	border-radius: 8px;
+}
+
 .modal input,
 .modal select {
 	float: left;

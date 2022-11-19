@@ -99,15 +99,16 @@ app.put('/songs/:id', function (req, res) {
         genre : req.body.genre
     }
 
+
+    // title = COALESCE(?,title), 
+    // artist = COALESCE(?,artist), 
     db.run(
-        `UPDATE songs set 
-           title = COALESCE(?,title), 
-           artist = COALESCE(?,artist), 
+        `UPDATE songs set       
            bpm = COALESCE(?,bpm) ,
            genre = COALESCE(?,genre)
            WHERE id = ?`,
-        [data.title, data.artist, data.bpm,data.genre, req.params.id],
-        function (err, result) {
+        [data.bpm,data.genre, req.params.id],
+        function (err) {
             if (err){
                 res.status(400).json({"error": res.message})
                 return;

@@ -20,6 +20,9 @@
         <div id="add">
             <a href="#song-modal">Add a song</a>
         </div>
+        <div id="edit">
+            <a href="#song-modal">Edit a song</a>
+        </div>
         <div id="pause">
             <a href="#" class="stop">Pause</a>
         </div>
@@ -47,6 +50,27 @@
             <input type="submit" value="Save song"/>
         </form>
         <div class="modal-close">
+            <a href="#">x</a>
+        </div>
+    </div>
+
+    <div class="modall">
+        <h4>Edit a song</h4>
+        <p>This is the modals content.</p>
+        <form action="" method="put" id = "formEdit">
+            <select id="jukebox">
+                <option value="">Pick a song</option>
+            </select>
+            <input type="number" name="bpm" placeholder="150"/>
+            <select name="genre">
+                <option value="rock">Rock</option>
+                <option value="house">House</option>
+                <option value="electronic">Electronic</option>
+                <option value="alternative techno">Alternative techno</option>
+            </select>
+            <input type="submit" value="Save song"/>
+        </form>
+        <div class="modall-close">
             <a href="#">x</a>
         </div>
     </div>

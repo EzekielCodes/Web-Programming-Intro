@@ -145,7 +145,20 @@
 	};
 
 	const editSong = function(song) {
-
+		fetch('/songs/:id', {
+			method: 'PUT', // or 'PUT'
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(song),
+			})
+			.then((response) => response.json())
+			.then((song) => {
+				console.log('Success:', song);
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+			});
 	};
 
 	const pause = function() {
@@ -210,6 +223,19 @@
 	})
 	// @todo
 	// Event click for edit
+
+	document.getElementById('formEdit').addEventListener('submit',function(e){
+		e.preventDefault();		
+		let bpm = document.querySelector('[name="bpm"]').value;
+		let genre = document.querySelector('[name="genre"]').value;
+
+		var song = {
+			bpm : bpm,
+			genre : genre
+		}
+		editSong(song);
+		refreshSongs();
+	})
 
 })();
 
