@@ -52,7 +52,7 @@ app.post('/songs', function (req, res) {
     // @TODO
     var errors=[]
     if (!req.body.title){
-        errors.push("No titele specified");
+        errors.push("No title specified");
     }
     if (!req.body.artist){
         errors.push("No artist specified");
@@ -69,15 +69,15 @@ app.post('/songs', function (req, res) {
     }
 
     var data = {
-        title : reg.params.title,
-        artist : reg.params.artist,
-        bpm : reg.params.bpm,
-        genre : reg.params.genre
+        title : req.body.title,
+        artist : req.body.artist,
+        bpm : req.body.bpm,
+        genre : req.body.genre
     }
     console.log("here");
-    const stmt = "INSERT INTO songs (title, artist, bpm,genre) VALUES (?,?, ?,?)";
+    var stmt = "INSERT INTO songs (title, artist, bpm,genre) VALUES (?,?, ?,?)";
     var params = [data.title, data.artist, data.bpm, data.genre];
-    db.run(stmt,params, function(err){
+    db.run(stmt,params, function(err,result){
         if (err){
             res.status(400).json({"error": err.message})
             return;
@@ -93,10 +93,10 @@ app.post('/songs', function (req, res) {
 // update a song in the database
 app.put('/songs/:id', function (req, res) {
     var data = {
-        title : reg.params.title,
-        artist : reg.params.artist,
-        bpm : reg.params.bpm,
-        genre : reg.params.genre
+        title : req.body.title,
+        artist : req.body.artist,
+        bpm : req.body.bpm,
+        genre : req.body.genre
     }
 
     db.run(
