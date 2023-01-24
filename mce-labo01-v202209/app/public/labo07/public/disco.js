@@ -19,7 +19,7 @@
 		maximus = (maxi - mini) + 1;
 		return (Math.floor(Math.random() * maximus) + mini);
 	}
-
+	let id = 0;
 
 	const createColors = function (fmin, fmx, smin, smx, tmin, tmx){
 		colors = '';
@@ -95,6 +95,32 @@
 			.catch((err) => console.log(err));
 	};
 
+	const editRefreshSongs = function() {
+		fetch('songs')
+			.then((response) => {
+				return response.json();
+			})
+			.then((songs) => {
+
+				let jukeboxElements = document.querySelectorAll('#editjukebox option');
+				jukeboxElements.forEach(jukeboxElement => {
+					if (jukeboxElement.value != '') {
+						jukeboxElement.remove();
+					}
+				});
+				songs.forEach(song => {
+					let songElement = htmlToElement('<option value="' + song.id + '"data-bpm="' + song.bpm + '"data-genre="' + song.genre + '">' + song.artist + " _ " + song.title + '</option>');
+
+					// Get the parent element
+					let parentDiv = document.getElementById('editjukebox');
+
+					// Insert the new element into before sp2
+					parentDiv.appendChild(songElement)
+				});
+			})
+			.catch((err) => console.log(err));
+	};
+
 	const activateLights = function(){
 		const jukebox = document.getElementById('jukebox');
 		const option = jukebox.options[jukebox.selectedIndex];
@@ -145,7 +171,8 @@
 	};
 
 	const editSong = function(song) {
-		fetch('/songs/:id', {
+		console.log("id " + id);
+		fetch('/songs/${id}', {
 			method: 'PUT', // or 'PUT'
 			headers: {
 				'Content-Type': 'application/json',
@@ -168,6 +195,7 @@
 
 	window.addEventListener('load', (event) => {
 
+		editRefreshSongs();
 		refreshSongs();
 		createColors();
 		
@@ -203,6 +231,8 @@
 		activateLights();
 	})
 
+
+
 	// @todo
 	// Event click listener for add
 	document.getElementById('form').addEventListener('submit',function(e){
@@ -226,15 +256,17 @@
 
 	document.getElementById('formEdit').addEventListener('submit',function(e){
 		e.preventDefault();		
-		let bpm = document.querySelector('[name="bpm"]').value;
-		let genre = document.querySelector('[name="genre"]').value;
-
+		let bpm = document.querySelector('[name="editbpm"]').value;
+		let genre = document.querySelector('[name="editgenre"]').value;
+		id = document.getElementById('editjukebox').value;
+		console.log(id);
+		console.log(genre);
 		var song = {
 			bpm : bpm,
 			genre : genre
 		}
 		editSong(song);
-		refreshSongs();
+		
 	})
 
 })();

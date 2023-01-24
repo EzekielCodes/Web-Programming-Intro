@@ -92,6 +92,7 @@ app.post('/songs', function (req, res) {
 
 // update a song in the database
 app.put('/songs/:id', function (req, res) {
+    console.log("app " + req.params.id);
     var data = {
         title : req.body.title,
         artist : req.body.artist,
